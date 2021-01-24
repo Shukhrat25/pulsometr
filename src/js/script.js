@@ -53,7 +53,7 @@ $(document).ready(function () {
 
 	//validate
 
-	function valideForms(form){
+	function valideForms(form) {
 		$(form).validate({
 			rules: {
 				name: {
@@ -83,5 +83,38 @@ $(document).ready(function () {
 	valideForms('#consultation-form');
 	valideForms('#consultation form');
 	valideForms('#order form');
-	$('input[name=phone]').mask("+7 (999) 999-99-99");
+
+	//mask phone
+	$('input[name=phone]').mask('+7 (999) 999-99-99');
+
+	//submit email
+	$('form').submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: 'mailer/smart.php',
+			data: $(this).serialize()
+		}).done(function () {
+			$(this).find('input').val('');
+			$('#consultation, #order').fadeOut();
+			$('.overlay, #thanks').fadeIn('slow');
+			$('form').trigger('reset');
+		});
+		return false;
+	});
+	//smooth scroll and pageup
+	$(window).scroll(function () {
+		if ($(this).scrollTop() > 1600) {
+			$('.pageup').fadeIn();
+		} else {
+			$('.pageup').fadeOut();
+		}
+	});
+
+	$("a[href^='#']").click(function () {
+		const _href = $(this).attr("href");
+		$("html, body").animate({ scrollTop: $(_href).offset().top + "px" });
+		return false;
+	});
+
 });
