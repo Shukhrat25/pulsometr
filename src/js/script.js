@@ -4,8 +4,18 @@ const slider = tns({
 	slideBy: 'page',
 	autoplay: false,
 	controls: false,
-	nav: false
-});
+	nav: false,
+	responsive: {
+		320: {
+			nav: true,
+			navPos: 'bottom'
+		},
+		992: {
+			nav: false
+		}
+
+	}
+ });
 
 document.querySelector('.prev').addEventListener('click', function () {
 	slider.goTo('prev');
@@ -15,6 +25,9 @@ document.querySelector('.next').addEventListener('click', function () {
 	slider.goTo('next');
 });
 
+
+
+//tabs
 $(document).ready(function () {
 	$('ul.catalog__tabs').on('click', 'li:not(.catalog__tab_active)', function () {
 		$(this)
@@ -116,5 +129,16 @@ $(document).ready(function () {
 		$("html, body").animate({ scrollTop: $(_href).offset().top + "px" });
 		return false;
 	});
+
+	wow = new WOW(
+		{
+		boxClass:     'wow',      // default
+		animateClass: 'animate__animated', // default
+		offset:       0,          // default
+		mobile:       true,       // default
+		live:         true        // default
+	  }
+	  )
+	  wow.init();
 
 });
